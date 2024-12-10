@@ -1,48 +1,61 @@
 #include "Game.hpp"
 
-Game::Game() 
-    : window(sf::VideoMode(800, 600), "Pong"),
-      ball(10.0f, 400.0f, 300.0f),
-      playerPaddle(50.0f, 250.0f),
-      aiPaddle(750.0f, 250.0f) {}
+Game::Game() : window(sf::VideoMode(800, 600), "Pong Game"),
+               score(), playerPaddle(10.0f, 100.0f, 10.0f, 300.0f), 
+               aiPaddle(10.0f, 100.0f, 780.0f, 300.0f), ball(10.0f) {}
 
 void Game::run() {
     while (window.isOpen()) {
-        processEvents();
         update();
         render();
     }
 }
 
-void Game::processEvents() {
-    sf::Event event;
-    while (window.pollEvent(event)) {
-        if (event.type == sf::Event::Closed)
-            window.close();
-    }
-}
-
 void Game::update() {
-    ball.update();
-
-    // AI Paddle movement
-    aiPaddle.moveTowards(ball.getPosition().y);
-
-    // Collision detection
-    if (ball.getBounds().intersects(playerPaddle.getBounds())) {
-        ball.rebound(true);
-    } else if (ball.getBounds().intersects(aiPaddle.getBounds())) {
-        ball.rebound(true);
+    sf::Time deltaTime = clock.restart();
+    
+    // Actualiza la pelota y las palas
+    ball.update(deltaTime.asSeconds());
+    playerPaddle.update();
+    aiPaddle.update(ball);
+    
+    // Verifica si la pelota sale de los límites izquierdo o derecho
+    if (ball.getPosition().x < 0 || ball.getPosition().x > 800) {
+        score.update(ball);  // Actualiza el marcador
+        ball.reset();  // Resetea la pelota al centro
     }
 
-    score.update(ball);
+    checkCollisions();
 }
 
 void Game::render() {
     window.clear();
+    window.draw(ball);
     ball.render(window);
     playerPaddle.render(window);
     aiPaddle.render(window);
-    score.render(window);
+    score.render(window); // Asegúrate de agregar el renderizado del score
     window.display();
+}
+
+void Game::checkCollisions() {
+    // Colisión con el paddle del jugador
+    if (ball.getGlobalBounds().intersects(playerPaddle.getGlobalBounds())) {
+        ball.setVelocity(-ball.getVelocity().x, ball.getVelocity().y);
+    }
+
+    // Colisión con el paddle de la IA
+    if (ball.getGlobalBounds().intersects(aiPaddle.getGlobalBounds())) {
+        ball.setVelocity(-ball.getVelocity().x, ball.getVelocity().y);
+    }
+
+    // Colisión con los bordes superior e inferior
+    if (ball.getPosition().y <= 0 || ball.getPosition().y >= 600) {
+        ball.setVelocity(ball.getVelocity().x, -ball.getVelocity().y);
+    }
+
+    // Colisión con los bordes izquierdo y derecho
+    if (ball.getPosition().x <= 0 || ball.getPosition().x >= 800) {
+        ball.setVelocity(-ball.getVelocity().x, ball.getVelocity().y);
+    }
 }

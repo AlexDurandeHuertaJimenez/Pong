@@ -1,13 +1,20 @@
-#ifndef AI_PADDLE_HPP
-#define AI_PADDLE_HPP
+#ifndef AIPADDLE_HPP
+#define AIPADDLE_HPP
 
-#include "Paddle.hpp"
+#include <SFML/Graphics.hpp>
 #include "Ball.hpp"
 
-class AiPaddle : public Paddle {
+class AiPaddle : public sf::RectangleShape {
 public:
-    AiPaddle(float x, float y);
-    void update(const Ball& ball);  // Actualiza la posición de la IA según la pelota
+    AiPaddle(float width, float height, float x, float y);
+    void update(const Ball& ball);
+    
+    // Métodos añadidos
+    sf::FloatRect getBounds() const;
+    void render(sf::RenderWindow& window);
+    
+private:
+    float speed;
 };
 
 #endif

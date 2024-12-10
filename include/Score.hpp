@@ -7,8 +7,10 @@
 class Score {
 public:
     Score();
-    void update(Ball& ball);
-    void render(sf::RenderWindow& window);
+    void update(const Ball& ball);  // Actualiza el puntaje basado en la posición de la pelota
+    void render(sf::RenderWindow& window);  // Dibuja el puntaje
+    void reset();  // Reinicia los puntajes
+    void resetBall(Ball& ball);  // Resetea la posición de la bola al centro
 
 private:
     int playerScore;

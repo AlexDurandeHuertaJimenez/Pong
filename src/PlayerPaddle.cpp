@@ -1,31 +1,31 @@
 #include "PlayerPaddle.hpp"
+#include <SFML/Window.hpp>
 
-PlayerPaddle::PlayerPaddle(float x, float y) : Paddle(x, y) {
-    shape.setSize({10.0f, 100.0f});
-    shape.setPosition(x, y);
-    shape.setFillColor(sf::Color::White);
+PlayerPaddle::PlayerPaddle(float width, float height, float x, float y)
+    : sf::RectangleShape(sf::Vector2f(width, height)), speed(0.2f) {
+    setPosition(x, y);
 }
 
-void PlayerPaddle::move(float dy) {
-    shape.move(0.0f, dy);
-}
-
-void PlayerPaddle::render(sf::RenderWindow& window) {
-    window.draw(shape);
-}
-
-void PlayerPaddle::handleInput() {
+void PlayerPaddle::update() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-        move(-0.2f);
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-        move(0.2f);
+        move(0, -speed);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+        move(0, speed);
+    }
+
+    // Limita la pala del jugador para que no se salga de la ventana
+    if (getPosition().y < 0) {
+        setPosition(getPosition().x, 0);  // Limita al borde superior
+    } else if (getPosition().y + getGlobalBounds().height > 600) {
+        setPosition(getPosition().x, 600 - getGlobalBounds().height);  // Limita al borde inferior
     }
 }
 
-sf::Vector2f PlayerPaddle::getPosition() const {
-    return shape.getPosition();
+sf::FloatRect PlayerPaddle::getBounds() const {
+    return getGlobalBounds();
 }
 
-sf::FloatRect PlayerPaddle::getBounds() const {
-    return shape.getGlobalBounds();
+void PlayerPaddle::render(sf::RenderWindow& window) {
+    window.draw(*this);
 }

@@ -1,35 +1,32 @@
 #include "AiPaddle.hpp"
+#include <SFML/Window.hpp>
 
-AiPaddle::AiPaddle(float x, float y) : Paddle(x, y) {
-    shape.setSize({10.0f, 100.0f});
-    shape.setPosition(x, y);
-    shape.setFillColor(sf::Color::White);
-}
-
-void AiPaddle::moveTowards(float targetY) {
-    float paddleY = shape.getPosition().y + shape.getSize().y / 2;
-    if (paddleY < targetY)
-        shape.move(0.0f, 0.2f);
-    else if (paddleY > targetY)
-        shape.move(0.0f, -0.2f);
-}
-
-void AiPaddle::render(sf::RenderWindow& window) {
-    window.draw(shape);
-}
-
-sf::Vector2f AiPaddle::getPosition() const {
-    return shape.getPosition();
-}
-
-sf::FloatRect AiPaddle::getBounds() const {
-    return shape.getGlobalBounds();
+AiPaddle::AiPaddle(float width, float height, float x, float y) 
+    : sf::RectangleShape(sf::Vector2f(width, height)), speed(0.2f) {
+    this->setPosition(x, y);
 }
 
 void AiPaddle::update(const Ball& ball) {
-    if (ball.getPosition().y < shape.getPosition().y) {
-        move(-0.2f);  // Mueve hacia arriba
-    } else if (ball.getPosition().y > shape.getPosition().y + shape.getSize().y) {
-        move(0.2f);   // Mueve hacia abajo
+    sf::Vector2f ballPosition = ball.getPosition();
+    // La IA sigue la pelota en el eje Y, puedes agregar lógica para que se mueva hacia la pelota
+    if (ballPosition.y < getPosition().y) {
+        move(0, -speed * 2.0f);  // Mueve hacia arriba
+    } else if (ballPosition.y > getPosition().y) {
+        move(0, speed * 2.0f);  // Mueve hacia abajo
     }
+
+    // Limita el movimiento de la IA Paddle para que no se salga de la ventana
+    if (getPosition().y < 0) {
+        setPosition(getPosition().x, 0);  // Limita al borde superior
+    } else if (getPosition().y + getGlobalBounds().height > 600) {
+        setPosition(getPosition().x, 600 - getGlobalBounds().height);  // Limita al borde inferior
+    }
+}
+
+sf::FloatRect AiPaddle::getBounds() const {
+    return getGlobalBounds();
+}
+
+void AiPaddle::render(sf::RenderWindow& window) {
+    window.draw(*this);
 }

@@ -11,17 +11,17 @@ class Game {
 public:
     Game();
     void run();
+    void update();
+    void render();
+    void checkCollisions();
 
 private:
     sf::RenderWindow window;
+    sf::Clock clock;
     Ball ball;
+    Score score;
     PlayerPaddle playerPaddle;
     AiPaddle aiPaddle;
-    Score score;
-
-    void processEvents();
-    void update();
-    void render();
 };
 
-#endif
+#endif // GAME_HPP

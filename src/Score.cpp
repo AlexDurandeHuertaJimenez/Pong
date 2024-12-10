@@ -1,34 +1,48 @@
 #include "Score.hpp"
+#include <iostream>
 
 Score::Score() : playerScore(0), aiScore(0) {
-    font.loadFromFile("data/arial.ttf");
+    if (!font.loadFromFile("assets/fonts/Fonts/arial.ttf")) {
+        std::cerr << "Error loading font!" << std::endl;
+    }
     playerScoreText.setFont(font);
-    playerScoreText.setCharacterSize(24);
-    playerScoreText.setPosition(200, 20);
-    playerScoreText.setFillColor(sf::Color::White);
-
     aiScoreText.setFont(font);
-    aiScoreText.setCharacterSize(24);
-    aiScoreText.setPosition(600, 20);
+
+    playerScoreText.setCharacterSize(30);
+    aiScoreText.setCharacterSize(30);
+
+    playerScoreText.setFillColor(sf::Color::White);
     aiScoreText.setFillColor(sf::Color::White);
 }
 
-void Score::update(Ball& ball) {
+void Score::update(const Ball& ball) {
+    // Si la bola pasa la posición X de la pantalla (fuera del campo de juego), incrementa el marcador
     if (ball.getPosition().x < 0) {
-        ++aiScore;
-        ball.setPosition(400.0f, 300.0f);
-        ball.setVelocity(-0.2f, -0.2f);
-    } else if (ball.getPosition().x > 800) {
-        ++playerScore;
-        ball.setPosition(400.0f, 300.0f);
-        ball.setVelocity(0.2f, 0.2f);
+        aiScore++;
+        resetBall(const_cast<Ball&>(ball));  // Restablece la bola
+    }
+    if (ball.getPosition().x > 800) {  // Asumiendo que el ancho de la ventana es 800px
+        playerScore++;
+        resetBall(const_cast<Ball&>(ball));  // Restablece la bola
     }
 
-    playerScoreText.setString(std::to_string(playerScore));
-    aiScoreText.setString(std::to_string(aiScore));
+    // Actualiza los textos con el nuevo puntaje
+    playerScoreText.setString("Player: " + std::to_string(playerScore));
+    aiScoreText.setString("AI: " + std::to_string(aiScore));
 }
 
 void Score::render(sf::RenderWindow& window) {
     window.draw(playerScoreText);
     window.draw(aiScoreText);
+}
+
+void Score::reset() {
+    playerScore = 0;
+    aiScore = 0;
+}
+
+void Score::resetBall(Ball& ball) {
+    // Resetea la posición y velocidad de la bola
+    ball.setPosition(400.0f, 300.0f);  // Centro de la pantalla
+    ball.setVelocity(-0.1f, -0.1f);  // Ajusta la velocidad de la bola
 }

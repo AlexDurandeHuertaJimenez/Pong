@@ -3,18 +3,17 @@
 
 #include <SFML/Graphics.hpp>
 
-class PlayerPaddle {
+class PlayerPaddle : public sf::RectangleShape {
 public:
-    PlayerPaddle(float x, float y);
-
-    void move(float dy);
-    void render(sf::RenderWindow& window);
-
-    sf::Vector2f getPosition() const;
+    PlayerPaddle(float width, float height, float x, float y);
+    void update();
+    
+    // Métodos añadidos
     sf::FloatRect getBounds() const;
-
+    void render(sf::RenderWindow& window);
+    
 private:
-    sf::RectangleShape shape;
+    float speed;
 };
 
 #endif
