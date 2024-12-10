@@ -2,22 +2,26 @@
 #define GAME_HPP
 
 #include <SFML/Graphics.hpp>
-#include "Paddle.hpp"
 #include "Ball.hpp"
+#include "PlayerPaddle.hpp"
+#include "AiPaddle.hpp"
 #include "Score.hpp"
 
 class Game {
 public:
     Game();
     void run();
-    void update();
 
 private:
     sf::RenderWindow window;
+    Ball ball;
     PlayerPaddle playerPaddle;
     AiPaddle aiPaddle;
-    Ball ball;
     Score score;
+
+    void processEvents();
+    void update();
+    void render();
 };
 
 #endif

@@ -3,12 +3,12 @@
 
 #include <SFML/Graphics.hpp>
 #include "Ball.hpp"
+
 class Score {
 public:
     Score();
-    void update(const Ball& ball);  // Actualizar el puntaje
+    void update(Ball& ball);
     void render(sf::RenderWindow& window);
-    void reset();  // Reiniciar el puntaje
 
 private:
     int playerScore;

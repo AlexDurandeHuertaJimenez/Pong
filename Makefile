@@ -1,21 +1,20 @@
+# Makefile
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -g -Iinclude  # Agregar la ruta de los encabezados
+CXXFLAGS = -std=c++17 -Wall -g -Iinclude
 LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 
-SRC = src/Game.cpp src/Paddle.cpp src/Ball.cpp src/Score.cpp
-OBJ = $(SRC:.cpp=.o)
-EXEC = bin/Game
+BIN = bin/Game
+SRC = $(wildcard src/*.cpp)
+OBJ = $(SRC:src/%.cpp=obj/%.o)
 
-all: $(EXEC)
+all: $(BIN)
 
-$(EXEC): $(OBJ)
-	$(CXX) $(OBJ) -o $(EXEC) $(LDFLAGS)
+$(BIN): $(OBJ)
+	$(CXX) $^ -o $@ $(LDFLAGS)
 
-%.o: %.cpp
+obj/%.o: src/%.cpp
+	mkdir -p obj
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-run: $(EXEC)
-	./$(EXEC)
-
 clean:
-	rm -f $(OBJ) $(EXEC)
+	rm -rf obj $(BIN)
