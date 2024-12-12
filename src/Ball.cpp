@@ -3,9 +3,14 @@
 #include <iostream>
 
 Ball::Ball(float radius, float x, float y) 
-    : shape(radius), velocity(-350.0f, -350.0f) {
+    : shape(radius + 5), velocity(-350.0f, -350.0f) {
     shape.setPosition(x, y);
     shape.setFillColor(sf::Color::White);
+    
+    if (!texture.loadFromFile("assets/images/Ball.png")) {
+        std::cerr << "Error loading ball texture" << std::endl;
+    }
+    shape.setTexture(&texture);
 
     // Cargar el archivo de sonido
     if (!buffer.loadFromFile("assets/sounds/bounce.ogg")) {

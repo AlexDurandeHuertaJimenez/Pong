@@ -11,6 +11,13 @@ void Paddle::draw(sf::RenderWindow& window) {
     window.draw(shape);
 }
 
+void Paddle::update(float deltaTime) {
+}
+
+void Paddle::setTexture(const sf::Texture& texture) {
+    shape.setTexture(&texture);
+}
+
 sf::FloatRect Paddle::getBounds() const {
     return shape.getGlobalBounds();
 }

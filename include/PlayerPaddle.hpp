@@ -1,18 +1,12 @@
-#ifndef PADDLE_HPP
-#define PADDLE_HPP
+#ifndef PLAYERPADDLE_HPP
+#define PLAYERPADDLE_HPP
 
-#include <SFML/Graphics.hpp>
+#include "Paddle.hpp"
 
-class Paddle {
-protected:
-    sf::RectangleShape shape;
-    float speed;
+class PlayerPaddle : public Paddle {
 public:
-    Paddle(float x, float y, float width, float height, float speed);
-    virtual void update(float deltaTime) = 0;
-    void draw(sf::RenderWindow& window);
-    void setTexture(const sf::Texture& texture);
-    sf::FloatRect getBounds() const;
+    PlayerPaddle(float x, float y, float width, float height, float speed);
+    void update(float deltaTime) override;
 };
 
 #endif

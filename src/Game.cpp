@@ -4,9 +4,9 @@
 Game::Game()
     : window(sf::VideoMode(800, 600), "Pong"), 
       ball(10.f, 400.f, 300.f), 
-      playerPaddle(20.f, 250.f, 10.f, 100.f, 300.f), 
+      playerPaddle(10.f, 250.f, 10.f, 100.f, 300.f), 
       aiPaddle(770.f, 250.f, 10.f, 100.f, 300.f, ball),
-      playerScore(0), aiScore(0) {
+      playerScore(0), aiScore(0), timeSinceLastPoint(0.f) {
 
     if (!font.loadFromFile("assets/fonts/ds_digital/DS-DIGIB.TTF")) {
         std::cerr << "Error loading font" << std::endl;
@@ -37,6 +37,11 @@ Game::Game()
     aiLabel.setPosition(710, 10);
     aiLabel.setString("AI");
 
+    countdownText.setFont(font);
+    countdownText.setCharacterSize(30);
+    countdownText.setFillColor(sf::Color::Red);
+    countdownText.setPosition(300, 550);
+
     if (!backgroundTexture.loadFromFile("assets/images/tenniscourtblue.png")) {
         std::cerr << "Error loading background image" << std::endl;
     }
@@ -47,6 +52,18 @@ Game::Game()
         float(windowSize.x) / textureSize.x,
         float(windowSize.y) / textureSize.y
     );
+
+    // Cargar textura para el paddle del jugador
+    if (!playerPaddleTexture.loadFromFile("assets/images/PlayerPaddle.png")) {
+        std::cerr << "Error loading player paddle texture" << std::endl;
+    }
+    playerPaddle.setTexture(playerPaddleTexture);
+
+    // Cargar textura para el paddle de la IA
+    if (!aiPaddleTexture.loadFromFile("assets/images/AIPaddle.png")) {
+        std::cerr << "Error loading AI paddle texture" << std::endl;
+    }
+    aiPaddle.setTexture(aiPaddleTexture);
 
     // Cargar el sonido de colisión
     if (!collisionBuffer.loadFromFile("assets/sounds/pongsound.ogg")) {
@@ -74,6 +91,20 @@ void Game::processEvents() {
 }
 
 void Game::update(float deltaTime) {
+    if (playerScore >= 5 || aiScore >= 5) {
+        window.close(); // Cerrar la ventana si algún jugador alcanza 5 puntos
+        return;
+    }
+
+    timeSinceLastPoint += deltaTime;
+
+    if (timeSinceLastPoint >= 20.f) {
+        playerScore++;
+        ball.setPosition(400.f, 300.f);
+        ball.setVelocity(-350.f, -350.f);
+        timeSinceLastPoint = 0.f;
+    }
+
     playerPaddle.update(deltaTime);
     aiPaddle.update(deltaTime);
     ball.update(deltaTime, playerPaddle, aiPaddle);
@@ -88,11 +119,16 @@ void Game::update(float deltaTime) {
         aiScore++;
         ball.setPosition(400.f, 300.f);
         ball.setVelocity(350.f, 350.f);
+        timeSinceLastPoint = 0.f; // Reiniciar el temporizador al marcar un punto
     } else if (ball.getPosition().x + ball.getBounds().width > 800) {
         playerScore++;
         ball.setPosition(400.f, 300.f);
         ball.setVelocity(-350.f, -350.f);
+        timeSinceLastPoint = 0.f; // Reiniciar el temporizador al marcar un punto
     }
+
+    // Actualizar texto de cuenta regresiva
+    countdownText.setString("Tiempo restante: " + std::to_string(static_cast<int>(20.f - timeSinceLastPoint)));
 
     playerScoreText.setString(std::to_string(playerScore));
     aiScoreText.setString(std::to_string(aiScore));
@@ -106,6 +142,7 @@ void Game::render() {
     ball.render(window);
     window.draw(playerScoreText);
     window.draw(aiScoreText);
+    window.draw(countdownText);
     window.draw(playerLabel);
     window.draw(aiLabel);
     window.display();

@@ -1,7 +1,14 @@
 #include "AIPaddle.hpp"
 
 AIPaddle::AIPaddle(float x, float y, float width, float height, float speed, const Ball& ball)
-    : Paddle(x, y, width, height, speed), ball(ball) {}
+    : Paddle(x, y, width, height, speed), ball(ball) {
+        shape.setSize(sf::Vector2f(width * 3, height));
+        if (shape.getTexture()) {
+        float scaleX = (width * 3) / shape.getTexture()->getSize().x;
+        float scaleY = height / shape.getTexture()->getSize().y;
+        shape.setScale(scaleX, scaleY);
+    }
+    }
 
 void AIPaddle::update(float deltaTime) {
     // Obtener la posición Y de la pelota y predecir su posición futura
