@@ -1,0 +1,76 @@
+@startuml Diagrama
+class Game {
+    -sf::RenderWindow window
+    -Ball ball
+    -PlayerPaddle playerPaddle
+    -AIPaddle aiPaddle
+    -int playerScore
+    -int aiScore
+    -float timeSinceLastPoint
+    -sf::Font font
+    -sf::Text playerScoreText
+    -sf::Text aiScoreText
+    -sf::Text countdownText
+    -sf::Texture backgroundTexture
+    -sf::Sprite backgroundSprite
+    -sf::Text playerLabel
+    -sf::Text aiLabel
+    -sf::Texture playerPaddleTexture
+    -sf::Texture aiPaddleTexture
+    -sf::SoundBuffer collisionBuffer
+    -sf::Sound collisionSound
+    +Game()
+    +void run()
+    -void processEvents()
+    -void update(float deltaTime)
+    -void render()
+}
+
+class Ball {
+    -sf::CircleShape shape
+    -sf::Vector2f velocity
+    -sf::SoundBuffer buffer
+    -sf::Sound sound
+    -sf::Texture texture
+    +Ball(float radius, float x, float y)
+    +void update(float deltaTime, const Paddle& playerPaddle, const Paddle& aiPaddle)
+    +void render(sf::RenderWindow& window)
+    +void setPosition(float x, float y)
+    +void setVelocity(float vx, float vy)
+    +sf::Vector2f getPosition() const
+    +sf::Vector2f getVelocity() const
+    +sf::FloatRect getBounds() const
+    +void rebound(bool horizontal)
+}
+
+class Paddle {
+    -sf::RectangleShape shape
+    -float speed
+    +Paddle(float x, float y, float width, float height, float speed)
+    +void update(float deltaTime)
+    +void render(sf::RenderWindow& window)
+    +sf::FloatRect getBounds() const
+}
+
+class PlayerPaddle {
+    -sf::Texture texture
+    +PlayerPaddle(float x, float y, float width, float height, float speed)
+    +void update(float deltaTime)
+    +void render(sf::RenderWindow& window)
+}
+
+class AIPaddle {
+    -sf::Texture texture
+    -Ball& ball
+    +AIPaddle(float x, float y, float width, float height, float speed, Ball& ball)
+    +void update(float deltaTime)
+    +void render(sf::RenderWindow& window)
+}
+
+Game --> Ball
+Game --> PlayerPaddle
+Game --> AIPaddle
+Ball --> Paddle
+PlayerPaddle --|> Paddle
+AIPaddle --|> Paddle
+@enduml
