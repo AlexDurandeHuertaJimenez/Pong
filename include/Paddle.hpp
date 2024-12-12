@@ -4,13 +4,17 @@
 #include <SFML/Graphics.hpp>
 
 class Paddle {
-public:
-    Paddle(float x, float y);                          // Constructor
-    void move(float offsetY);                           // Mover la paleta
-    const sf::RectangleShape& getShape() const;         // Obtener la forma de la paleta
-
 protected:
-    sf::RectangleShape shape;                           // Forma de la paleta
+    sf::RectangleShape shape;
+    float speed;
+
+public:
+    Paddle(float x, float y, float width, float height, float speed);
+
+    virtual void update(float deltaTime) = 0;
+    void draw(sf::RenderWindow& window);
+
+    sf::FloatRect getBounds() const;
 };
 
 #endif

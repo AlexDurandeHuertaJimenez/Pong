@@ -4,24 +4,21 @@
 #include <SFML/Graphics.hpp>
 #include "Ball.hpp"
 #include "PlayerPaddle.hpp"
-#include "AiPaddle.hpp"
-#include "Score.hpp"
+#include "AIPaddle.hpp"
 
 class Game {
+private:
+    sf::RenderWindow window;
+    Ball ball;
+    PlayerPaddle playerPaddle;  // Cambiado a PlayerPaddle
+    AIPaddle aiPaddle;
+
 public:
     Game();
     void run();
-    void update();
+    void processEvents();
+    void update(float deltaTime);
     void render();
-    void checkCollisions();
-
-private:
-    sf::RenderWindow window;
-    sf::Clock clock;
-    Ball ball;
-    Score score;
-    PlayerPaddle playerPaddle;
-    AiPaddle aiPaddle;
 };
 
-#endif // GAME_HPP
+#endif

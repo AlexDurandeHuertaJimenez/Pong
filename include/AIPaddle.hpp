@@ -1,20 +1,17 @@
 #ifndef AIPADDLE_HPP
 #define AIPADDLE_HPP
 
-#include <SFML/Graphics.hpp>
+#include "Paddle.hpp"
 #include "Ball.hpp"
 
-class AiPaddle : public sf::RectangleShape {
-public:
-    AiPaddle(float width, float height, float x, float y);
-    void update(const Ball& ball);
-    
-    // Métodos añadidos
-    sf::FloatRect getBounds() const;
-    void render(sf::RenderWindow& window);
-    
+class AIPaddle : public Paddle {
 private:
-    float speed;
+    const Ball& ball;
+
+public:
+    AIPaddle(float x, float y, float width, float height, float speed, const Ball& ball);
+
+    void update(float deltaTime) override;
 };
 
 #endif

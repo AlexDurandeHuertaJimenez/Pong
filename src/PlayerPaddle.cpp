@@ -1,31 +1,14 @@
 #include "PlayerPaddle.hpp"
-#include <SFML/Window.hpp>
+#include <SFML/Window/Keyboard.hpp>
 
-PlayerPaddle::PlayerPaddle(float width, float height, float x, float y)
-    : sf::RectangleShape(sf::Vector2f(width, height)), speed(0.2f) {
-    setPosition(x, y);
-}
+PlayerPaddle::PlayerPaddle(float x, float y, float width, float height, float speed)
+    : Paddle(x, y, width, height, speed) {}
 
-void PlayerPaddle::update() {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-        move(0, -speed);
+void PlayerPaddle::update(float deltaTime) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && shape.getPosition().y > 0) {
+        shape.move(0, -speed * deltaTime);
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-        move(0, speed);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && shape.getPosition().y + shape.getSize().y < 600) {
+        shape.move(0, speed * deltaTime);
     }
-
-    // Limita la pala del jugador para que no se salga de la ventana
-    if (getPosition().y < 0) {
-        setPosition(getPosition().x, 0);  // Limita al borde superior
-    } else if (getPosition().y + getGlobalBounds().height > 600) {
-        setPosition(getPosition().x, 600 - getGlobalBounds().height);  // Limita al borde inferior
-    }
-}
-
-sf::FloatRect PlayerPaddle::getBounds() const {
-    return getGlobalBounds();
-}
-
-void PlayerPaddle::render(sf::RenderWindow& window) {
-    window.draw(*this);
 }

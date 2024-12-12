@@ -1,20 +1,26 @@
-# Makefile
+# Configuración de MinGW y SFML
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -g -Iinclude
-LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
+CXXFLAGS = -std=c++17 -I./include -I"C:/SFML/include" -Wall -g
+LDFLAGS = -L"C:/SFML/lib" -lsfml-graphics -lsfml-window -lsfml-system
 
-BIN = bin/Game
-SRC = $(wildcard src/*.cpp)
-OBJ = $(SRC:src/%.cpp=obj/%.o)
+SRC_DIR = src
+OBJ_DIR = bin
+INC_DIR = include
 
-all: $(BIN)
+SOURCES = $(wildcard $(SRC_DIR)/*.cpp)
+OBJECTS = $(SOURCES:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
+EXEC = pong
 
-$(BIN): $(OBJ)
-	$(CXX) $^ -o $@ $(LDFLAGS)
+all: $(EXEC)
 
-obj/%.o: src/%.cpp
-	mkdir -p obj
+$(EXEC): $(OBJECTS)
+	$(CXX) $(OBJECTS) -o $(OBJ_DIR)/$(EXEC) $(LDFLAGS)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -rf obj $(BIN)
+	rm -rf $(OBJ_DIR)/*.o $(OBJ_DIR)/$(EXEC)
+
+run: $(EXEC)
+	./$(OBJ_DIR)/$(EXEC)

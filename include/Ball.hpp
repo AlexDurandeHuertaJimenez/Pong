@@ -3,21 +3,22 @@
 
 #include <SFML/Graphics.hpp>
 
-class Ball : public sf::CircleShape {
+class Ball {
 public:
-    Ball(float radius = 10.0f);
-    void update(float deltaTime);
-    void reset();
+    Ball(float radius, float x, float y);
+
+    void update();
     void render(sf::RenderWindow& window);
-    void rebound(bool vertical);
-    sf::FloatRect getBounds() const;
-    sf::Vector2f getPosition() const;
+
     void setPosition(float x, float y);
-    void setVelocity(float x, float y);  // Declaración sin definición en línea
-    sf::Vector2f getVelocity() const { return velocity; }
+    void setVelocity(float vx, float vy);
+    sf::Vector2f getPosition() const;
+    sf::FloatRect getBounds() const;
+    void rebound(bool horizontal);
 
 private:
+    sf::CircleShape shape;
     sf::Vector2f velocity;
 };
 
-#endif // BALL_HPP
+#endif

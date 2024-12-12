@@ -1,15 +1,16 @@
 #include "Paddle.hpp"
 
-Paddle::Paddle(float x, float y) {
-    shape.setSize(sf::Vector2f(10.0f, 100.0f));   // Tamaño de la paleta
-    shape.setPosition(x, y);                       // Posición inicial
-    shape.setFillColor(sf::Color::White);          // Color blanco
+Paddle::Paddle(float x, float y, float width, float height, float speed)
+    : speed(speed) {
+    shape.setSize(sf::Vector2f(width, height));
+    shape.setPosition(x, y);
+    shape.setFillColor(sf::Color::White);
 }
 
-void Paddle::move(float offsetY) {
-    shape.move(0.0f, offsetY);                    // Mueve solo en el eje Y
+void Paddle::draw(sf::RenderWindow& window) {
+    window.draw(shape);
 }
 
-const sf::RectangleShape& Paddle::getShape() const {
-    return shape;                                 // Devuelve la forma de la paleta
+sf::FloatRect Paddle::getBounds() const {
+    return shape.getGlobalBounds();
 }
