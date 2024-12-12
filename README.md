@@ -16,7 +16,7 @@ Este proyecto esta estructurado de la siguiente manera:
 
 El diagrama de clases del proyecto incluye las siguientes clases:
 
-![alt text](Diagrama.png)
+![alt text](assets/images/Diagrama.png)
 
 # Integrantes:
 
@@ -36,4 +36,4 @@ En caso de que no se pueda compilar, ejecutar los siguientes comandos:
 > make run
 
 # Capturas de pantalla
-![alt text](Image1.png)
+![alt text](assets/images/Image1.png)
