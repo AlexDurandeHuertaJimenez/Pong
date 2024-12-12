@@ -12,17 +12,32 @@ Game::Game()
         std::cerr << "Error loading font" << std::endl;
     }
 
+    // Configurar el texto del marcador del jugador
     playerScoreText.setFont(font);
-    playerScoreText.setCharacterSize(24);
-    playerScoreText.setFillColor(sf::Color::White);
-    playerScoreText.setPosition(10, 10);
+    playerScoreText.setCharacterSize(48); // Aumentar tamaño del texto
+    playerScoreText.setFillColor(sf::Color::Red); // Cambiar color del texto a rojo
+    playerScoreText.setPosition(300, 10); // Centrar el texto horizontalmente
 
+    // Configurar el texto del marcador del AI
     aiScoreText.setFont(font);
-    aiScoreText.setCharacterSize(24);
-    aiScoreText.setFillColor(sf::Color::White);
-    aiScoreText.setPosition(760, 10);
+    aiScoreText.setCharacterSize(48); // Aumentar tamaño del texto
+    aiScoreText.setFillColor(sf::Color::Red); // Cambiar color del texto a rojo
+    aiScoreText.setPosition(475, 10); // Centrar el texto horizontalmente
 
-    if (!backgroundTexture.loadFromFile("assets/images/tenniscourt.png")) {
+    // Configurar etiquetas de puntaje
+    playerLabel.setFont(font);
+    playerLabel.setCharacterSize(48);
+    playerLabel.setFillColor(sf::Color::Red);
+    playerLabel.setPosition(50, 10);
+    playerLabel.setString("JUGADOR");
+
+    aiLabel.setFont(font);
+    aiLabel.setCharacterSize(48);
+    aiLabel.setFillColor(sf::Color::Red);
+    aiLabel.setPosition(725, 10);
+    aiLabel.setString("AI");
+
+    if (!backgroundTexture.loadFromFile("assets/images/tenniscourtblue.png")) {
         std::cerr << "Error loading background image" << std::endl;
     }
     backgroundSprite.setTexture(backgroundTexture);
@@ -91,5 +106,7 @@ void Game::render() {
     ball.render(window);
     window.draw(playerScoreText);
     window.draw(aiScoreText);
+    window.draw(playerLabel);
+    window.draw(aiLabel);
     window.display();
 }

@@ -2,6 +2,7 @@
 #define BALL_HPP
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "Paddle.hpp"
 
 class Ball {
@@ -21,6 +22,8 @@ public:
 private:
     sf::CircleShape shape;
     sf::Vector2f velocity;
+    sf::SoundBuffer buffer;
+    sf::Sound sound;
 };
 
 #endif

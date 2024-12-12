@@ -28,7 +28,8 @@ private:
     sf::Text aiScoreText;
     sf::Texture backgroundTexture;
     sf::Sprite backgroundSprite;
-
+    sf::Text playerLabel; // Nueva variable para la etiqueta del jugador
+    sf::Text aiLabel;
     // Variables para el sonido
     sf::SoundBuffer collisionBuffer;
     sf::Sound collisionSound;
