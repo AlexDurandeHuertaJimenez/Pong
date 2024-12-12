@@ -24,6 +24,7 @@ private:
     sf::Vector2f velocity;
     sf::SoundBuffer buffer;
     sf::Sound sound;
+    sf::Texture texture;
 };
 
 #endif
