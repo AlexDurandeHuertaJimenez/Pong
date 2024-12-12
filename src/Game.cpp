@@ -8,7 +8,7 @@ Game::Game()
       aiPaddle(770.f, 250.f, 10.f, 100.f, 300.f, ball),
       playerScore(0), aiScore(0) {
 
-    if (!font.loadFromFile("assets/fonts/ds_digital/DS-DIGI.TTF")) {
+    if (!font.loadFromFile("assets/fonts/ds_digital/DS-DIGIB.TTF")) {
         std::cerr << "Error loading font" << std::endl;
     }
 
@@ -34,7 +34,7 @@ Game::Game()
     aiLabel.setFont(font);
     aiLabel.setCharacterSize(48);
     aiLabel.setFillColor(sf::Color::Red);
-    aiLabel.setPosition(725, 10);
+    aiLabel.setPosition(710, 10);
     aiLabel.setString("AI");
 
     if (!backgroundTexture.loadFromFile("assets/images/tenniscourtblue.png")) {
