@@ -10,7 +10,6 @@ private:
 
 public:
     AIPaddle(float x, float y, float width, float height, float speed, const Ball& ball);
-
     void update(float deltaTime) override;
 };
 

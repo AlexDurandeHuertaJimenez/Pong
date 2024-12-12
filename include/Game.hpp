@@ -2,23 +2,36 @@
 #define GAME_HPP
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "Ball.hpp"
 #include "PlayerPaddle.hpp"
 #include "AIPaddle.hpp"
 
 class Game {
-private:
-    sf::RenderWindow window;
-    Ball ball;
-    PlayerPaddle playerPaddle;  // Cambiado a PlayerPaddle
-    AIPaddle aiPaddle;
-
 public:
     Game();
     void run();
+
+private:
     void processEvents();
     void update(float deltaTime);
     void render();
+
+    sf::RenderWindow window;
+    Ball ball;
+    PlayerPaddle playerPaddle;
+    AIPaddle aiPaddle;
+    int playerScore;
+    int aiScore;
+    sf::Font font;
+    sf::Text playerScoreText;
+    sf::Text aiScoreText;
+    sf::Texture backgroundTexture;
+    sf::Sprite backgroundSprite;
+
+    // Variables para el sonido
+    sf::SoundBuffer collisionBuffer;
+    sf::Sound collisionSound;
 };
 
 #endif

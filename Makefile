@@ -1,7 +1,7 @@
 # Configuración de MinGW y SFML
 CXX = g++
 CXXFLAGS = -std=c++17 -I./include -I"C:/SFML/include" -Wall -g
-LDFLAGS = -L"C:/SFML/lib" -lsfml-graphics -lsfml-window -lsfml-system
+LDFLAGS = -L"C:/SFML/lib" -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 SRC_DIR = src
 OBJ_DIR = bin
