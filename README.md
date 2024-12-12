@@ -1,12 +1,13 @@
 # Pong with AI
-En este proyecto se hace una implementacion simple del juego de Pong con AI en lenguaje c, utilizando la biblioteca SFML. El juego presenta una partida entre un jugador contra la AI donde la pelota debe de pegar en el lado de uno de los dos para conseguir un punto.
+En este proyecto se hace una implementación simple del juego de Pong con AI en lenguaje c, utilizando la biblioteca SFML. El juego presenta una partida entre un jugador contra la AI donde la pelota debe de pegar en el lado de uno de los dos para conseguir un punto. Al estar jugando contra una IA, marcar un punto se vuelve una tarea dificil, por lo que si el jugador aguanta 20 segundos sin que la IA le marque un punto a este se le sumará un punto. El juego se acaba cuando alguno de los dos llega a 5 puntos.
 
 # Estructura del Proyecto
 
 Este proyecto esta estructurado de la siguiente manera:
 
-- assets: contiene las imagenes, fuesntes de escrirura y sonidos utilizados en el juego.
+- assets: contiene las imagenes, fuentes de escrirura y sonidos utilizados en el juego.
 - bin:  se encuentran los objetos creados por las clases y el ejecutable.
+- docs: incluye el diagrama del programa.
 - include: se almacenan todos los archivos de las clases que se necesitan para el juego.
 - src: se encuentra los codigos que se implementaran a cada clase respectivamente.
 - Makefile: es el archivo para compilar y ejecutar el proyecto
@@ -15,7 +16,7 @@ Este proyecto esta estructurado de la siguiente manera:
 
 El diagrama de clases del proyecto incluye las siguientes clases:
 
-
+![alt text](Diagrama.png)
 
 # Integrantes:
 
@@ -28,3 +29,11 @@ El diagrama de clases del proyecto incluye las siguientes clases:
 Para poder compilar el proyecto, en la terminal se debe ejecutar el siguiente comando:
 
 > make run
+
+En caso de que no se pueda compilar, ejecutar los siguientes comandos:
+
+> make clean
+> make run
+
+# Capturas de pantalla
+![alt text](Image1.png)

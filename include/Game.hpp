@@ -16,18 +16,17 @@ private:
     void processEvents();
     void update(float deltaTime);
     void render();
-
     sf::RenderWindow window;
     Ball ball;
     PlayerPaddle playerPaddle;
     AIPaddle aiPaddle;
     int playerScore;
     int aiScore;
-    float timeSinceLastPoint; // Nueva variable para el temporizador
+    float timeSinceLastPoint;
     sf::Font font;
     sf::Text playerScoreText;
     sf::Text aiScoreText;
-    sf::Text countdownText; // Nueva variable para el texto de cuenta regresiva
+    sf::Text countdownText;
     sf::Texture backgroundTexture;
     sf::Sprite backgroundSprite;
     sf::Text playerLabel;
