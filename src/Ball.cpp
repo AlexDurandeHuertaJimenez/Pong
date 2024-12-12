@@ -2,11 +2,13 @@
 #include "Paddle.hpp"
 #include <iostream>
 
+// Constructor que inicializa la pelota con su radio, posición y otros atributos
 Ball::Ball(float radius, float x, float y) 
     : shape(radius + 5), velocity(-350.0f, -350.0f) {
     shape.setPosition(x, y);
     shape.setFillColor(sf::Color::White);
     
+    // Cargar la textura de la pelota
     if (!texture.loadFromFile("assets/images/Ball.png")) {
         std::cerr << "Error loading ball texture" << std::endl;
     }
@@ -14,12 +16,13 @@ Ball::Ball(float radius, float x, float y)
 
     // Cargar el archivo de sonido
     if (!buffer.loadFromFile("assets/sounds/bounce.ogg")) {
-        // Manejar error
+        // Manejar error al cargar el archivo de sonido
         std::cerr << "Error al cargar el archivo de sonido" << std::endl;
-        } 
+    } 
     sound.setBuffer(buffer);
 }
 
+// Método para actualizar la posición y manejo de colisiones de la pelota
 void Ball::update(float deltaTime, const Paddle& playerPaddle, const Paddle& aiPaddle) {
     shape.move(velocity * deltaTime);
 
@@ -30,7 +33,7 @@ void Ball::update(float deltaTime, const Paddle& playerPaddle, const Paddle& aiP
     // Rebotar en los bordes superior e inferior de la pantalla
     if (ballTop <= 0 || ballBottom >= 600) {
         if (sound.getStatus() != sf::Sound::Playing) {
-            sound.play();  // Reproducir el sonido
+            sound.play();  // Reproducir el sonido de rebote
         }
         rebound(false);
     }
@@ -43,30 +46,37 @@ void Ball::update(float deltaTime, const Paddle& playerPaddle, const Paddle& aiP
     }
 }
 
+// Método para renderizar la pelota en la ventana
 void Ball::render(sf::RenderWindow& window) {
     window.draw(shape);
 }
 
+// Establecer la posición de la pelota
 void Ball::setPosition(float x, float y) {
     shape.setPosition(x, y);
 }
 
+// Establecer la velocidad de la pelota
 void Ball::setVelocity(float vx, float vy) {
     velocity = {vx, vy};
 }
 
+// Obtener la posición de la pelota
 sf::Vector2f Ball::getPosition() const {
     return shape.getPosition();
 }
 
-sf::Vector2f Ball::getVelocity() const { // Implementación del método getVelocity
+// Implementación del método getVelocity para obtener la velocidad de la pelota
+sf::Vector2f Ball::getVelocity() const {
     return velocity;
 }
 
+// Obtener los límites de la pelota para detección de colisiones
 sf::FloatRect Ball::getBounds() const {
     return shape.getGlobalBounds();
 }
 
+// Método para hacer rebotar la pelota en una dirección específica
 void Ball::rebound(bool horizontal) {
     if (horizontal)
         velocity.x = -velocity.x;

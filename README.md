@@ -37,3 +37,4 @@ En caso de que no se pueda compilar, ejecutar los siguientes comandos:
 
 # Capturas de pantalla
 ![alt text](assets/images/Image1.png)
+![alt text](assets/images/Image2.png)
