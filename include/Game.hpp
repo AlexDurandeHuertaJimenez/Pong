@@ -23,14 +23,17 @@ private:
     AIPaddle aiPaddle;
     int playerScore;
     int aiScore;
+    float timeSinceLastPoint; // Nueva variable para el temporizador
     sf::Font font;
     sf::Text playerScoreText;
     sf::Text aiScoreText;
+    sf::Text countdownText; // Nueva variable para el texto de cuenta regresiva
     sf::Texture backgroundTexture;
     sf::Sprite backgroundSprite;
-    sf::Text playerLabel; // Nueva variable para la etiqueta del jugador
+    sf::Text playerLabel;
     sf::Text aiLabel;
-    // Variables para el sonido
+    sf::Texture playerPaddleTexture;
+    sf::Texture aiPaddleTexture;
     sf::SoundBuffer collisionBuffer;
     sf::Sound collisionSound;
 };
