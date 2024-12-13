@@ -37,7 +37,7 @@ En caso de que no se pueda compilar, ejecutar los siguientes comandos:
 
 # Controles
 
-Para jugar el juego solo se necesitan de las teclas "W" y "A" (subir y bajar el paddle del jugador)
+Para jugar el juego solo se necesitan de las teclas "W" y "S" (subir y bajar el paddle del jugador)
 
 # Capturas de pantalla
 ![alt text](assets/images/Image1.png)
