@@ -35,6 +35,10 @@ En caso de que no se pueda compilar, ejecutar los siguientes comandos:
 > make clean
 > make run
 
+# Controles
+
+Para jugar el juego solo se necesitan de las teclas "W" y "A" (subir y bajar el paddle del jugador)
+
 # Capturas de pantalla
 ![alt text](assets/images/Image1.png)
 ![alt text](assets/images/Image2.png)
